@@ -9,57 +9,83 @@ function getComputerChoice(){
     return "Scissors";
 }
 
-function playRound(playerSelection, computerSelection){
-    if(playerSelection === computerSelection){
-        return "It's a Tie";
-    }
+function determinePlayerWon(playerSelection, computerSelection){
     if(playerSelection === "Rock"){
-        return computerSelection === "Scissors" ? "You win" : "You lose";
+        return computerSelection === "Scissors" ? true : false;
     }
     if(playerSelection === "Scissors"){
-        return computerSelection === "Paper" ? "You win" : "You lose";
+        return computerSelection === "Paper" ? true : false;
     }
-    return computerSelection === "Rock" ? "You win" : "You lose";
+    return computerSelection === "Rock" ? true : false;
 }
 
-function getPlayerChoice(){
-    while(true){
-        let input = prompt("Enter your choice ('Rock', 'Paper', 'Scissors')");
-        if (input.toLowerCase() === "rock" || 
-            input.toLowerCase() === "paper" ||
-            input.toLowerCase() === "scissors"){
-                return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+function incrementScoreIcons(scoreIconList){
+    for(let i = 0; i < scoreIconList.length; i++){
+        if(!scoreIconList[i].classList.contains("won-round")){
+            scoreIconList[i].classList.toggle("won-round");
+            if(i === scoreIconList.length - 1){
+                return true;
             }
-        console.log(`Error: "${input}" is not a valid choice`);
+            return false;
+        }
     }
 }
 
-function game(){
-    let playerScore = 0;
-    let computerScore = 0;
-
-    console.log("I challenge you to a best of 5 match of Rock, Paper, Scissors");
-
-    while(playerScore < 3 && computerScore < 3){
-
-        let playerChoice = getPlayerChoice();
-        let computerChoice = getComputerChoice();
-        let outcome = playRound(playerChoice, computerChoice);
-        console.log(outcome);
-        if (outcome === "You win"){
-            playerScore++;
-        }
-        else if (outcome === "You lose"){
-            computerScore++;
-        }
-        console.log(`Your score is ${playerScore} and my score is ${computerScore}`);
+function playRound(e){
+    const computerSelection = getComputerChoice();
+    const computerButton = document.querySelector(`.computer .${computerSelection.toLocaleLowerCase()}`);
+    const playerSelection = e.target.textContent;
+    const gameInfo = document.querySelector('.game-info');
+    if(playerSelection === computerSelection){
+        gameInfo.textContent = "It's a Tie";
+        e.target.classList.toggle("tie-button");
+        computerButton.classList.toggle("tie-button");
     }
-    if(playerScore > computerScore){
-        console.log("Looks like you beat me");
-    }
-    else {
-        console.log("Thought so, I win");
+    else{
+        const didPlayerWin = determinePlayerWon(playerSelection, computerSelection);
+        let matchOver = false;
+        if (didPlayerWin){
+            gameInfo.textContent = "You won this round";
+            e.target.classList.toggle("won-button");
+            computerButton.classList.toggle("lost-button");
+            const humanScoreIcons = document.querySelectorAll(".human .score-icon");
+            matchOver = incrementScoreIcons(humanScoreIcons);
+        }
+        else {
+            gameInfo.textContent = "You lost this round";
+            e.target.classList.toggle("lost-button");
+            computerButton.classList.toggle("won-button");
+            const computerScoreIcons = document.querySelectorAll(".computer .score-icon");
+            matchOver = incrementScoreIcons(computerScoreIcons);
+        }
+        if(matchOver){
+            if(didPlayerWin){
+                gameInfo.textContent = "You win the match";
+            }
+            else{
+                gameInfo.textContent = "You lost the match";
+            }
+            document.querySelectorAll(".human .game-button").forEach(button => {
+                button.removeEventListener('click', playRound);
+            });
+        }
     }
 }
 
-game();
+function endTransition(e){
+    if(e.propertyName !== "border-left-color") return;
+    if(this.classList.contains("won-button")) this.classList.toggle("won-button");
+    if(this.classList.contains("lost-button")) this.classList.toggle("lost-button");
+    if(this.classList.contains("tie-button")) this.classList.toggle("tie-button");
+}
+
+document.querySelectorAll(".human .game-button").forEach(button => {
+    button.addEventListener('click', playRound);
+});
+
+document.querySelectorAll(".game-button").forEach(button => {
+    button.addEventListener('transitionend', endTransition);
+});
+
+
+

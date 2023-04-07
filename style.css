@@ -62,6 +62,10 @@ h1 {
 }
 
 .game-button {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgb(54, 64, 73);
     color: rgb(217, 219, 221);
     font-size: 3vh;
@@ -80,23 +84,32 @@ h1 {
     font-size: 3.1vh;
 }
 
-.won-button {
-    border-color: rgb(79, 255, 79);
-    border-width: 8px;
-}
-
-.lost-button {
-    border-color: rgb(228, 30, 30);
-    border-width: 8px;
-}
-
 .computer-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
     border-style: none;
     background-color: rgb(86, 94, 100);
     color: rgb(163, 164, 165);
+}
+
+.won-button {
+    border-style: solid;
+    border-color: rgb(103, 255, 103);
+    border-width: 3vh;
+    color: rgb(217, 219, 221);
+}
+
+.lost-button {
+    border-style: solid;
+    border-color: rgb(255, 69, 69);
+    border-width: 3vh;
+    color: rgb(217, 219, 221);
+}
+
+.tie-button {
+    border-style: solid;
+    border-color: rgb(236, 233, 45);
+    border-width: 3vh;
+    color: rgb(217, 219, 221);
 }
 
 .score-container {
@@ -109,10 +122,12 @@ h1 {
     height: 2vh;
     border-style: solid;
     border-radius: 50%;
+    transition-duration: 0.4s;
 }
 
 .won-round{
     background-color: rgb(51, 231, 51);
+    border-radius: 5%;
 }
 
 .game-info {
