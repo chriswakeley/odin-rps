@@ -6,18 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="script.js" defer></script>
+    <!--<script src="script.js" defer></script>-->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <h1>Rock Paper Scissors</h1>
-    <div class="button-container">
-        <button class="rock game-button">Rock</button>
-        <button class="paper game-button">Paper</button>
-        <button class="scissors game-button">Scissors</button>
+    <div class="game-container">
+        <div class="human player-container">
+            <h2 class="human-header">Flesh</h2>
+            <div class="button-container">
+                <button class="rock game-button">Rock</button>
+                <button class="paper game-button">Paper</button>
+                <button class="scissors game-button">Scissors</button>
+            </div>
+            <div class="human score-container">
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+            </div>
+        </div>
+        <div class="computer player-container">
+            <h2 class="machine-header">Machine</h2>
+            <div class="button-container">
+                <div class="rock game-button computer-button">Rock</div>
+                <div class="paper game-button computer-button">Paper</div>
+                <div class="scissors game-button computer-button">Scissors</div>
+            </div>
+            <div class="computer score-container">
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+                <div class="score-icon"></div>
+            </div>
+        </div>
     </div>
-    <p class="game-info">Make a selection</p>
+    <p class="game-info">Round 1</p>
 </body>
 
 </html>
